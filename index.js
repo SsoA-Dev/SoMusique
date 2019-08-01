@@ -4,6 +4,7 @@
 ///////////////////////////////////////////////////////////////
 const Discord = require('discord.js')
 const botconfig = require('./botconfig.json')
+const token = process.env.token;
 const ytdl = require("ytdl-core");
 const fs = require('fs');
 const active = new Map();
@@ -25,10 +26,9 @@ fs.readdir('./commands/', (err, files) =>{
 })
 
 bot.on("message", async message => {
-
-
   if(message.author.bot) return;
   if(message.channel.type === "dm") return;
+  let prefix = botconfig.prefix;
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
@@ -43,4 +43,4 @@ bot.on("message", async message => {
   if(commandfile) commandfile.run(bot,message,args, option);
 });
 
-bot.login(process.env.BOT_TOKEN);
+bot.login(token);
